@@ -7,11 +7,26 @@ function AmountSelect() {
     const history = useHistory();
     const handleClickConfirmationFactory = (montant) => () => {
         context.montant = montant;
+        createContribution();
         history.push('/confirmation');
     }
 
     const handleClickOther = () => {
         history.push('/entrer-montant');
+    }
+
+    const createContribution = () => {
+        fetch('http://xonatis.academy/react/api/dwwm5/contributions', {
+            method: 'POST',
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                email: context.email,
+                montant: context.montant
+            })
+        });
     }
 
     const buttons = [];
